@@ -14,6 +14,7 @@ typedef struct contactInfo
 }info;
 
 info list[MAX_ITENS];
+struct contactInfo info, *ptr_infos;
 
 int totalContatos = 0;
 
@@ -41,22 +42,54 @@ void removerContato(){
                 break;
 
             }
-        }else
-        {
-            found = 0;
-            printf("Contato nao encontrado!\n");
         }
+    }
+    if(found == 0)
+    {
+        printf("Contato nao encontrado!\n");
     }
 }
 
 
-
+/*Concluido*/
 void ordenarLista(){
+    for(int i = 0; i<totalContatos - 1; i++)
+    {
+        for(int j = 0; j< totalContatos - 1 - i; j++)
+        {
+            if(strcmp(list[j].name, list[j+1].name) > 0){
+                info temp;
 
+                temp = list[j];
+                list[j] = list[j+1];
+                list[j+1] = temp;
+            }
+        }
+    }
+    printf("Lista ordenada com sucesso!\n");
 }
 
-void addContato(){
+/*Concluido*/
 
+void addContato(){
+    if(totalContatos>=MAX_ITENS)
+    {
+        printf("A lista de contatos ja esta cheia!\n");
+        return;
+    }
+    
+    ptr_infos = &list[totalContatos];
+
+    printf("Qual sera o nome do seu contato? ");
+    scanf(" %[^\n]", list[totalContatos].name);
+
+    printf("Qual sera o numero do seu contato? ");
+    scanf(" %[^\n]", list[totalContatos].numero);
+
+    printf("Qual sera o email do seu contato? ");
+    scanf(" %[^\n]", list[totalContatos].email);
+
+    totalContatos++;
 }
 
 /*Concluido*/
@@ -71,7 +104,7 @@ void editar(){
         char nome[100];
         printf("Digite o nome do contato: ");
         scanf(" %[^\n]", nome);
-        for(i = 0; i < totalContatos; i++)
+        for(int i = 0; i < totalContatos; i++)
         {
             if(strcmp(nome, list[i].name) == 0)
             {
@@ -120,12 +153,21 @@ void editar(){
     }
 }
 
+/*Concluido*/
+
 void carregaNoTxt(){
-
-}
-
-void listaCompleta(){
-
+    fptr = fopen("contatos.txt", "w")
+    if(fptr == NULL)
+    {
+        printf("Seu arquivo esta vazio!\n ");
+        return;
+    }
+    for(int i = 0; i<totalContatos; i++)
+    {
+        fprintf(fptr, "%s, %s, %s\n", list[i].nome, list[i].numero, list[i].email);
+    }
+    fclose(fptr);
+    printf("Contatos salvos com sucesso!\n");
 }
 
 /*Concluido*/
@@ -140,14 +182,58 @@ void buscaContato(){
             found = 1;
             printf("Nome: %s\nNumero: %s\nEmail: %s\n", list[i].name, list[i].numero, list[i].email);
             break;
-        }else{
-            printf("Nao encontramos este contato!");
-            break;
         }
+    }
+    if(found==0)
+    {
+        printf("Nao encontramos este contato!");
     }
 }
 
 
 int main(){
+    int escolhas = 0;
+    while(escolhas != 6){
+    printf("\n---------------------BEM-VINDO---------------------\n");
+    printf("Essa eh uma aplicacao totalmente feita em C, para organizar uma lista de contatos!\n");
+    printf("1 --> Adicionar um Contato\n");
+    printf("2 --> Remover um Contato\n");
+    printf("3 --> Buscar um Contato\n");
+    printf("4 --> Editar contatos\n");
+    printf("5 --> Salvar e carregar\n");
+    printf("6 --> Ordenar Lista\n");
+    printf("Qual e a sua escolha? ");
+    scanf("%d", &escolhas);
+        switch (escolhas)
+        {
+        case 1:
+            addContato();
+            
+            break;
+        case 2:
+            removerContato();
+            break;
+
+        case 3:
+            buscaContato();
+            break;
+
+        case 4:
+            editar();
+            break;
+
+        case 5:
+            carregaNoTxt();
+            break;
+        case 6:
+            ordenarLista();
+            break;
+
+        default:
+            printf("Opcao invalida!\n");
+            break;
+        }
+    }      
+
     return 0;
 }
