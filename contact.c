@@ -14,9 +14,15 @@ typedef struct contactInfo
 }info;
 
 info list[MAX_ITENS];
-struct contactInfo info, *ptr_infos;
+struct contactInfo info_tmp, *ptr_infos;
 
 int totalContatos = 0;
+
+int info_cmp(const void *ptr1, const void *ptr2) {
+    const info *info1 = ptr1;
+    const info *info2 = ptr2;
+    return strcmp(info1->name, info2->name);
+}
 
 /*Concluido*/
 
@@ -53,19 +59,7 @@ void removerContato(){
 
 /*Concluido*/
 void ordenarLista(){
-    for(int i = 0; i<totalContatos - 1; i++)
-    {
-        for(int j = 0; j< totalContatos - 1 - i; j++)
-        {
-            if(strcmp(list[j].name, list[j+1].name) > 0){
-                info temp;
-
-                temp = list[j];
-                list[j] = list[j+1];
-                list[j+1] = temp;
-            }
-        }
-    }
+    qsort(list, totalContatos, sizeof(info), info_cmp);
     printf("Lista ordenada com sucesso!\n");
 }
 
