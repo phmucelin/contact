@@ -18,6 +18,8 @@ struct contactInfo info_tmp, *ptr_infos;
 
 int totalContatos = 0;
 
+/*Concluido*/
+
 int info_cmp(const void *ptr1, const void *ptr2) {
     const info *info1 = ptr1;
     const info *info2 = ptr2;
@@ -56,8 +58,8 @@ void removerContato(){
     }
 }
 
-
 /*Concluido*/
+
 void ordenarLista(){
     qsort(list, totalContatos, sizeof(info), info_cmp);
     printf("Lista ordenada com sucesso!\n");
@@ -184,6 +186,7 @@ void buscaContato(){
     }
 }
 
+/*Concluido*/
 
 int main(){
     int escolhas = 0;
