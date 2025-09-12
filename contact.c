@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define MAX_ITENS 100;
+#define MAX_ITENS 100
 FILE* fptr;
 typedef struct contactInfo
 {
@@ -129,7 +129,7 @@ void editar(){
                 else if(escolha == 3)
                 { 
                     char emailVar[100];
-                    printf("Como sera o novo e-mail? ")
+                    printf("Como sera o novo e-mail? ");
                     scanf(" %[^\n]", emailVar);
                     strcpy(list[i].email, emailVar);
                     printf("E-mail alterado com sucesso!\n");
@@ -173,7 +173,7 @@ void buscaContato(){
     int found = 0;
     printf("Qual o nome do contato que voce procura informacoes? ");
     scanf(" %[^\n]", searchName);
-    for(i = 0; i<totalContatos; i++){
+    for(int i = 0; i<totalContatos; i++){
         if(strcmp(searchName, list[i].name) == 0){
             found = 1;
             printf("Nome: %s\nNumero: %s\nEmail: %s\n", list[i].name, list[i].numero, list[i].email);
