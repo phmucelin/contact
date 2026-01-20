@@ -217,7 +217,7 @@ info* buscaContatoPorEmail(char *searchEmail){
     return NULL;
 }
 
-/*Concluido*/
+/*melhorar essa main*/
 
 int main(){
     int escolhas = 0;
