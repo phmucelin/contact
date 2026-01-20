@@ -149,6 +149,18 @@ bool editar(){
                 return false;
             }
         }
+        /*Ainda criando sem usar infinitos if/else. Aprimorando a function*/
+        case 2:
+        char telefone[24];
+        printf("Digite o telefone de busca: ");
+        scanf(" %[^\n]", telefone);
+        info* contato = buscaContatoPorTel(telefone);
+        if(contato == null){return false;}
+        char novoTelefone[24];
+        printf("Digite como sera o novo numero de telefone: ");
+        scanf(" %[^\n]", novoTelefone);
+        strcpy(contato->numero, novoTelefone);
+        return true;
     
     default:
         break;
