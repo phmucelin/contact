@@ -26,7 +26,7 @@ int info_cmp(const void *ptr1, const void *ptr2) {
     return strcmp(info1->name, info2->name);
 }
 
-/*Concluido*/
+/*Funcao criada para remover contato de dentro da struct*/
 
 void removerContato(){
     
@@ -58,14 +58,14 @@ void removerContato(){
     }
 }
 
-/*Concluido*/
+/*Ordena a lista em ordem alfabetica*/
 
 void ordenarLista(){
     qsort(list, totalContatos, sizeof(info), info_cmp);
     printf("Lista ordenada com sucesso!\n");
 }
 
-/*Concluido*/
+/*ADD: Para lista de Contatos / Coleta Infos*/
 
 void addContato(){
     if(totalContatos>=MAX_ITENS)
@@ -88,9 +88,9 @@ void addContato(){
     totalContatos++;
 }
 
-/*Concluido*/
+/*Edit: Contato realizando busca. Com busca no nome.*/
 
-void editar(){
+bool editar(){
     int choice = 0;
     printf("Como voce deseja procurar pelo contato que voce deseja editar? Digite: 1 - NOME | 2 - EMAIL | 3 - NUMERO");
     scanf("%d", &choice);
@@ -100,53 +100,59 @@ void editar(){
         char nome[100];
         printf("Digite o nome do contato: ");
         scanf(" %[^\n]", nome);
-        for(int i = 0; i < totalContatos; i++)
+        info *foundContact = buscaContatoPorNome(nome);
+        if(foundContact == NULL)
         {
-            if(strcmp(nome, list[i].name) == 0)
+            printf("Nao encontramos o seu usuario.\n");
+            return false;
+        }
+        else
+        {
+            printf("Contato encontrado: %s\n%s\n%s\n", foundContact->name, foundContact->numero, foundContact->email);
+            printf("Qual voce deseja editar? 1 -> NOME | 2 -> NUMERO | 3 -> EMAIL: ");
+            int escolha = 0;
+            scanf("%d", &escolha);
+            if(escolha == 1)
             {
-                printf("%s\n%d\n%s\n", list[i].name, list[i].numero, list[i].email);
-                printf("Qual voce deseja editar? 1 -> NOME | 2 -> NUMERO | 3 -> EMAIL: ");
-                int escolha = 0;
-                scanf("%d", &escolha);
-                if(escolha == 1)
-                {
-                    char nomeVar[100];
-                    printf("Como sera o novo nome? ");
-                    scanf(" %[^\n]", nomeVar);
-                    strcpy(list[i].name, nomeVar);
-                    printf("\nNome alterado com sucesso!\n");
-                    break;
-                }
-                else if(escolha == 2)
-                {
-                    char numeroVar[15];
-                    printf("Como sera o novo numero? ");
-                    scanf(" %[^\n]", numeroVar);
-                    strcpy(list[i].numero, numeroVar);
-                    printf("Numero alterado com sucesso!\n");
-                    break;
-                }
-                else if(escolha == 3)
-                { 
-                    char emailVar[100];
-                    printf("Como sera o novo e-mail? ");
-                    scanf(" %[^\n]", emailVar);
-                    strcpy(list[i].email, emailVar);
-                    printf("E-mail alterado com sucesso!\n");
-                    break;
-                }
-                else
-                {
-                    printf("Opcao invalida!\n");
-                    break;
-                }
+                char nomeVar[100];
+                printf("Como sera o novo nome? ");
+                scanf(" %[^\n]", nomeVar);
+                if(strlen(nomeVar) == 0 ) return false;
+                strcpy(foundContact->name, nomeVar);
+                printf("\nNome alterado com sucesso!\n");
+                return true;
+            }
+            else if(escolha == 2)
+            {
+                char numeroVar[15];
+                printf("Como sera o novo numero? ");
+                scanf(" %[^\n]", numeroVar);
+                if(strlen(numeroVar) == 0 ) return false;
+                strcpy(foundContact->numero, numeroVar);
+                printf("Numero alterado com sucesso!\n");
+                return true;
+            }
+            else if(escolha == 3)
+            { 
+                char emailVar[100];
+                printf("Como sera o novo e-mail? ");
+                scanf(" %[^\n]", emailVar);
+                if(strlen(emailVar) == 0 ) return false;
+                strcpy(foundContact->email, emailVar);
+                printf("E-mail alterado com sucesso!\n");
+                return true;
+            }
+            else
+            {
+                printf("Opcao invalida!\n");
+                return false;
             }
         }
-        break;
     
     default:
         break;
     }
+    return false;
 }
 
 /*Concluido*/
@@ -166,24 +172,15 @@ void carregaNoTxt(){
     printf("Contatos salvos com sucesso!\n");
 }
 
-/*Concluido*/
+/*Concluido: busca por nome*/
 
-void buscaContato(){
-    char searchName[100];
-    int found = 0;
-    printf("Qual o nome do contato que voce procura informacoes? ");
-    scanf(" %[^\n]", searchName);
+info* buscaContatoPorNome(char *searchName){
     for(int i = 0; i<totalContatos; i++){
         if(strcmp(searchName, list[i].name) == 0){
-            found = 1;
-            printf("Nome: %s\nNumero: %s\nEmail: %s\n", list[i].name, list[i].numero, list[i].email);
-            break;
+            return &list[i];
         }
     }
-    if(found==0)
-    {
-        printf("Nao encontramos este contato!");
-    }
+    return NULL;
 }
 
 /*Concluido*/
