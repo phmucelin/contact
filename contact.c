@@ -283,11 +283,11 @@ int WriteSheets()
         fprintf(stderr, "Error ao criar arquivo .xlsx\n");
         return 1;
     }
-    xlsxiowrite_set_row_height(handle, 1);
+    xlsxiowrite_set_row_height(handle, 2);
     xlsxiowrite_set_detection_rows(handle, 10);
-    xlsxiowrite_add_column(handle, "Nome", 0);
-    xlsxiowrite_add_column(handle, "Email", 1);
-    xlsxiowrite_add_column(handle, "Telefone", 2);
+    xlsxiowrite_add_column(handle, "Nome", 20);
+    xlsxiowrite_add_column(handle, "Email", 30);
+    xlsxiowrite_add_column(handle, "Telefone", 15);
     xlsxiowrite_next_row(handle);
     int i;
     for(i = 0; i < totalContatos; i++)
