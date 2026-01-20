@@ -149,18 +149,96 @@ bool editar(){
                 return false;
             }
         }
-        /*Ainda criando sem usar infinitos if/else. Aprimorando a function*/
         case 2:
-        char telefone[24];
-        printf("Digite o telefone de busca: ");
-        scanf(" %[^\n]", telefone);
-        info* contato = buscaContatoPorTel(telefone);
-        if(contato == null){return false;}
-        char novoTelefone[24];
-        printf("Digite como sera o novo numero de telefone: ");
-        scanf(" %[^\n]", novoTelefone);
-        strcpy(contato->numero, novoTelefone);
-        return true;
+            char email[24];
+            printf("Digite o email de busca: ");
+            scanf(" %[^\n]", email);
+            info* contato = buscaContatoPorEmail(email);
+            if(contato == null){return false;}
+            printf("Contato encontrado: %s\n%s\n%s\n", foundContact->name, foundContact->numero, foundContact->email);
+            printf("Qual voce deseja editar? 1 -> NOME | 2 -> NUMERO | 3 -> EMAIL: ");
+            int escolha = 0;
+            scanf("%d", &escolha);
+            if(escolha == 1)
+                {
+                    char nomeVar[100];
+                    printf("Como sera o novo nome? ");
+                    scanf(" %[^\n]", nomeVar);
+                    if(strlen(nomeVar) == 0 ) return false;
+                    strcpy(foundContact->name, nomeVar);
+                    printf("\nNome alterado com sucesso!\n");
+                    return true;
+                }
+            else if(escolha == 2)
+                {
+                    char numeroVar[15];
+                    printf("Como sera o novo numero? ");
+                    scanf(" %[^\n]", numeroVar);
+                    if(strlen(numeroVar) == 0 ) return false;
+                    strcpy(foundContact->numero, numeroVar);
+                    printf("Numero alterado com sucesso!\n");
+                    return true;
+                }
+            else if(escolha == 3)
+                { 
+                    char emailVar[100];
+                    printf("Como sera o novo e-mail? ");
+                    scanf(" %[^\n]", emailVar);
+                    if(strlen(emailVar) == 0 ) return false;
+                    strcpy(foundContact->email, emailVar);
+                    printf("E-mail alterado com sucesso!\n");
+                    return true;
+                }
+            else
+                {
+                    printf("Opcao invalida!\n");
+                    return false;
+                }
+        case 3:
+            char telefone[24];
+            printf("Digite o telefone de busca: ");
+            scanf(" %[^\n]", telefone);
+            info* contato = buscaContatoPorTel(telefone);
+            if(contato == null){return false;}
+            printf("Contato encontrado: %s\n%s\n%s\n", foundContact->name, foundContact->numero, foundContact->email);
+            printf("Qual voce deseja editar? 1 -> NOME | 2 -> NUMERO | 3 -> EMAIL: ");
+            int escolha = 0;
+            scanf("%d", &escolha);
+            if(escolha == 1)
+                {
+                    char nomeVar[100];
+                    printf("Como sera o novo nome? ");
+                    scanf(" %[^\n]", nomeVar);
+                    if(strlen(nomeVar) == 0 ) return false;
+                    strcpy(foundContact->name, nomeVar);
+                    printf("\nNome alterado com sucesso!\n");
+                    return true;
+                }
+                else if(escolha == 2)
+                {
+                    char numeroVar[15];
+                    printf("Como sera o novo numero? ");
+                    scanf(" %[^\n]", numeroVar);
+                    if(strlen(numeroVar) == 0 ) return false;
+                    strcpy(foundContact->numero, numeroVar);
+                    printf("Numero alterado com sucesso!\n");
+                    return true;
+                }
+                else if(escolha == 3)
+                { 
+                    char emailVar[100];
+                    printf("Como sera o novo e-mail? ");
+                    scanf(" %[^\n]", emailVar);
+                    if(strlen(emailVar) == 0 ) return false;
+                    strcpy(foundContact->email, emailVar);
+                    printf("E-mail alterado com sucesso!\n");
+                    return true;
+                }
+                else
+                {
+                    printf("Opcao invalida!\n");
+                    return false;
+                }
     
     default:
         break;
