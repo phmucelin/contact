@@ -89,6 +89,7 @@ void addContato(){
 }
 
 /*Edit: Contato realizando busca. Com busca no nome.*/
+/*Proximo passo: add -> as functions de busca tel, busca email*/
 
 bool editar(){
     int choice = 0;
@@ -155,28 +156,49 @@ bool editar(){
     return false;
 }
 
-/*Concluido*/
+/*refactor atualized: type return bool*/
 
-void carregaNoTxt(){
+bool carregaNoTxt(){
     fptr = fopen("contatos.txt", "w")
     if(fptr == NULL)
     {
-        printf("Seu arquivo esta vazio!\n ");
-        return;
+        return false;
     }
     for(int i = 0; i<totalContatos; i++)
     {
         fprintf(fptr, "%s, %s, %s\n", list[i].nome, list[i].numero, list[i].email);
     }
     fclose(fptr);
-    printf("Contatos salvos com sucesso!\n");
+    return true;
 }
 
-/*Concluido: busca por nome*/
+/*add: busca por nome*/
 
 info* buscaContatoPorNome(char *searchName){
     for(int i = 0; i<totalContatos; i++){
         if(strcmp(searchName, list[i].name) == 0){
+            return &list[i];
+        }
+    }
+    return NULL;
+}
+
+/*add: function busca por telefone*/
+
+info* buscaContatoPorTel(char *searchTel){
+    for(int i = 0; i<totalContatos; i++){
+        if(strcmp(searchTel, list[i].numero) == 0){
+            return &list[i];
+        }
+    }
+    return NULL;
+}
+
+/*add: function busca por email*/
+
+info* buscaContatoPorEmail(char *searchEmail){
+    for(int i = 0; i<totalContatos; i++){
+        if(strcmp(searchEmail, list[i].email) == 0){
             return &list[i];
         }
     }
